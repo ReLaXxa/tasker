@@ -5,7 +5,6 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Login from './components/auth/Login.vue'
 import Register from './components/auth/Register.vue'
-import Resource from './components/resources/Resources.vue'
 
 Vue.use(Router)
 
@@ -15,7 +14,10 @@ let router = new Router({
         {
             path: '/',
             name: 'home',
-            component: Home
+            component: Home,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/login',
@@ -23,23 +25,15 @@ let router = new Router({
             component: Login
         },
         {
+            path: '/about',
+            name: 'about',
+            component: About
+        },
+        {
             path: '/register',
             name: 'register',
             component: Register
         },
-        {
-            path: '/resources',
-            name: 'resources',
-            component: Resource,
-            meta: {
-                requiresAuth: true
-            }
-        },
-        {
-            path: '/about',
-            name: 'about',
-            component: About,
-        }
     ]
 })
 

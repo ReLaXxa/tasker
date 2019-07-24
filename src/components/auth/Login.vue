@@ -2,8 +2,8 @@
     <div>
         <form class="login" @submit.prevent="login">
             <h1>Sign in</h1>
-            <label>Email</label>
-            <input required v-model="email" type="email" placeholder="Name"/>
+            <label>Username</label>
+            <input required v-model="username" type="text" placeholder="Name"/>
             <label>Password</label>
             <input required v-model="password" type="password" placeholder="Password"/>
             <hr/>
@@ -16,16 +16,16 @@
     export default {
         data() {
             return {
-                email: "",
-                password: ""
+                username: "admin",
+                password: "pass123"
             };
         },
         methods: {
             login: function() {
-                let email = this.email;
+                let username = this.username;
                 let password = this.password;
                 this.$store
-                    .dispatch("login", { email, password })
+                    .dispatch("login", { username, password })
                     .then(() => this.$router.push("/"))
                     .catch(err => console.log(err));
             }
