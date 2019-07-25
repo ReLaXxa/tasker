@@ -14,3 +14,7 @@ npm run serve
 ```
 npm run dev
 ```
+### Database settings
+```
+On initialization via `npm run dev` the DB will be automaticaly created
+```
