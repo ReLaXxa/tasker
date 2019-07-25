@@ -1,7 +1,7 @@
 module.exports = {
     getAllTasks(db) {
         // const sql = "select a.id,a.title,a.body,a.owner,a.status,b.username from tasks a left join users b where a.id=b.id";
-        const sql = "select * from tasks left join users on tasks.owner=users.id";
+        const sql = "select a.*,b.username from tasks a left join users b on a.owner=b.id";
         const params = [];
         return db.all(sql, params);
     },
@@ -18,7 +18,7 @@ module.exports = {
     editTaskById(db, task) {
         const sql = `UPDATE tasks 
                     SET
-                        title='${task.name}',
+                        title='${task.title}',
                         body='${task.body}',
                         status='${task.status}',
                         owner='${task.owner}'

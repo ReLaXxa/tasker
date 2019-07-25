@@ -20,7 +20,6 @@ module.exports = (checkToken, db) => {
         }
     });
     routes.post("/", checkToken, async (req, res, next) => {
-        console.log(req.body)
         if (!req.body.title) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a title' });
         if (!req.body.status) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a status' });
         if (!req.body.body) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a body' });
@@ -39,18 +38,30 @@ module.exports = (checkToken, db) => {
         }
     });
     routes.patch("/:id", checkToken, async (req, res, next) => {
+
         if (!req.body.title) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a title' });
         if (!req.body.status) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a status' });
         if (!req.body.body) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a body' });
         if (!req.body.owner) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a owner' });
         const task = {
+            id:req.params.id,
             title: req.body.title,
             body: req.body.body,
             owner: req.body.owner,
             status: req.body.status
         };
         try {
-            await tasksModel.changeTask(db, task).then((items) => res.status(200).send({ msg: "Task's been changed" }));
+            await tasksModel.editTaskById(db, task).then((items) => res.status(200).send({ msg: "Task's been changed" }));
+        } catch (error) {
+            console.log(error)
+            res.status(400).send(error)
+        }
+    });
+    routes.delete("/:id", checkToken, async (req, res, next) => {
+        if (!req.params.id) return res.status(400).send({ msg: 'Form error.', reason: 'You need to provide a title' });
+
+        try {
+            await tasksModel.deleteTaskById(db, Number(req.params.id)).then((items) => res.status(200).send({ msg: "Task's been deleted" }));
         } catch (error) {
             console.log(error)
             res.status(400).send(error)
